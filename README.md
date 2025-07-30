@@ -39,7 +39,8 @@ docker run --rm -it \
   -e TF_FIRST_RUN=true \
   -e AWS_ACCESS_KEY_ID=XXX \
   -e AWS_SECRET_ACCESS_KEY=YYY \
-  ghcr.io/idem-ia/idem-deployer:v1
+  -e TEMPLATE_URL="https://github.com/Idem-IA/ecs_aws_template.git" \
+  ghcr.io/idem-ia/idem-worker:1.3
 ```
 
 ---
