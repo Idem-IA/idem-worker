@@ -2,23 +2,19 @@
 set -euo pipefail
 
 cd /deploy
-
+ git clone ${TEMPLATE_URL} template && mv template/* .
 echo "[ENTRYPOINT] Authentification cloud..."
 /opt/worker/auth.sh
 
 echo "[ENTRYPOINT] Provisionnement backend distant..."
-/opt/worker/bootstrap_backend.sh
+#/opt/worker/bootstrap_backend.sh
 
 echo "[ENTRYPOINT] Initialisation Terraform avec backend dynamique..."
 
 # Génère dynamiquement les arguments backend en fonction du provider
 case "${CLOUD_PROVIDER}" in
   aws)
-    terraform init -upgrade -input=false \
-      -backend-config="bucket=${TF_BACKEND_BUCKET}" \
-      -backend-config="region=${TF_REGION}" \
-      -backend-config="key=${TF_BACKEND_KEY:-terraform.tfstate}" \
-      -backend-config="dynamodb_table=${TF_LOCK_TABLE:-terraform-locks}"
+    terraform init -upgrade -input=false 
     ;;
   azure)
     terraform init -upgrade -input=false \
